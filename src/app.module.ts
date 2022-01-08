@@ -6,8 +6,9 @@ import { RolesModule } from './roles/roles.module';
 import { Role } from './roles/roles.model';
 import { UserModule } from './users/users.module';
 import { UserRoles } from './roles/user-roles.model';
-import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/auth.service';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 
 @Module({
   controllers: [],
@@ -29,6 +30,10 @@ import { AuthModule } from './auth/auth.module';
     UserModule,
     RolesModule,
     AuthModule
+  ],
+  exports: [
+    AuthService,
+    JwtModule
   ]
 })
 export class AppModule {}

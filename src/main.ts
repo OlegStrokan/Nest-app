@@ -4,8 +4,10 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function start() {
   const PORT = process.env.PORT || 8888;
+
   const app = await NestFactory.create(AppModule);
 
+  // swagger конфиг
   const config = new DocumentBuilder()
     .setTitle('Nest app')
     .setDescription('REST API documentation')
@@ -13,6 +15,7 @@ async function start() {
     .addTag('Oleh')
     .build()
 
+  // настройка swagger'а
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/api/docs', app, document);
 
