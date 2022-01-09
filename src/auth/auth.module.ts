@@ -10,13 +10,16 @@ import { AuthController } from './auth.controller';
   imports: [
     // для предотвращения циклической зависимости нужно использовать forwardRef
     forwardRef(() => UserModule),
-    UserModule,
   JwtModule.register({
     secret: process.env.PRIVATE_KEY || 'SECRET',
     signOptions: {
       expiresIn: '24h'
     }
   })
+  ],
+  exports: [
+    AuthService,
+    JwtModule
   ]
 })
 export class AuthModule {}
