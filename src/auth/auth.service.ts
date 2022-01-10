@@ -4,6 +4,7 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { User } from '../users/users.model';
+import { UpdateUserDto } from '../users/dto/update-user.dto';
 @Injectable()
 export class AuthService {
 
@@ -39,6 +40,13 @@ export class AuthService {
       return user;
     }
     throw new UnauthorizedException({ message: 'Некорректный email или пароль'})
+  }
+
+   async updateProfile(userDto: UpdateUserDto) {
+    const user = await this.userService.getUserById(userDto.id);
+    user.email = userDto.email;
+    await user.save();
+    return user;
   }
 }
 

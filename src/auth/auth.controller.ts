@@ -1,7 +1,9 @@
- import { Body, Controller, Post } from '@nestjs/common';
+ import { Body, Controller, Patch, Post } from '@nestjs/common';
  import { ApiTags } from '@nestjs/swagger';
  import { CreateUserDto } from '../users/dto/create-user.dto';
  import { AuthService } from './auth.service';
+ import { User } from '../users/users.model';
+ import { UpdateUserDto } from '../users/dto/update-user.dto';
 
 
 @ApiTags('Авторизация')
@@ -18,6 +20,11 @@ export class AuthController {
   @Post('/registration')
   registration(@Body() userDto: CreateUserDto) {
     return this.authService.registration(userDto)
+  }
+
+  @Patch('/update')
+  updateProfile(@Body() userDto: UpdateUserDto): Promise<User> {
+    return this.authService.updateProfile(userDto)
   }
 
 
