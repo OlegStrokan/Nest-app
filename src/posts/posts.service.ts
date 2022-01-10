@@ -22,15 +22,17 @@ export class PostsService {
   }
 
   async updatePost(id, dto: UpdatePostDto, image) {
-    const post = await this.postRepository.findOne({ where: id})
-     post.content = dto.content;
+    const post = await this.postRepository.findOne({ where: { id }})
+     post.content = dto.content
      post.title = dto.title;
-     await post.save();
+    const fileName = await this.fileService.createFile(image)
+     post.image = fileName
+     await post.save()
      return post
   }
 
   async deletePost(id) {
-     await this.postRepository.destroy({ where: id})
+     await this.postRepository.destroy({ where: { id }})
   }
 
 

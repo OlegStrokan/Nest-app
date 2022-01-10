@@ -41,7 +41,7 @@ export class UsersController {
     return this.usersService.addRole(dto)
   }
 
-  @ApiOperation({summary: 'Выдать роль'})
+  @ApiOperation({summary: 'Забанить пользователя'})
   @ApiResponse({status: 200})
   @Roles("ADMIN")
   @UseGuards(RolesGuard)
