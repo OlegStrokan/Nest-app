@@ -3,11 +3,13 @@ import { AuthService } from './auth.service';
 import { UserModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
+import { EmailModule } from '../email/email.module';
 
 @Module({
   controllers: [AuthController],
   providers: [AuthService],
   imports: [
+    EmailModule,
     // для предотвращения циклической зависимости нужно использовать forwardRef
     forwardRef(() => UserModule),
   JwtModule.register({

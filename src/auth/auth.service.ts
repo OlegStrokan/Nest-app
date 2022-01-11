@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { User } from '../users/users.model';
 import { UpdateUserDto } from '../users/dto/update-user.dto';
+
 @Injectable()
 export class AuthService {
 
@@ -20,7 +21,6 @@ export class AuthService {
     if (candidate) {
       throw new HttpException('Пользователь с таким email существует', HttpStatus.BAD_REQUEST)
     }
-
     const hashPassword = await bcrypt.hash(userDto.password, 5);
     const user = await this.userService.createUser({...userDto, password: hashPassword});
     return this.generateToken(user)
@@ -35,6 +35,11 @@ export class AuthService {
 
   private async validateUser(userDto: CreateUserDto) {
     const user = await this.userService.getUserByEmail(userDto.email)
+
+    if (!user) {
+      throw new UnauthorizedException({ message: 'Некорректный email или пароль'});
+    }
+
     const passwordEquals = await bcrypt.compare(userDto.password, user.password)
     if (user && passwordEquals) {
       return user;
@@ -47,6 +52,16 @@ export class AuthService {
     user.email = userDto.email;
     await user.save();
     return user;
+  }
+
+  async activate(link: string) {
+      const user = await this.userService.getUserByLink(link)
+      if (!user) {
+        throw new HttpException('Некорректная ссылка активации', HttpStatus.BAD_REQUEST)
+      }
+
+      /*user.isActivated = true;
+      await user.save();*/
   }
 }
 

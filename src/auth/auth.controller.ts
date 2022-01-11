@@ -1,9 +1,9 @@
- import { Body, Controller, Patch, Post } from '@nestjs/common';
+ import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
  import { ApiTags } from '@nestjs/swagger';
  import { CreateUserDto } from '../users/dto/create-user.dto';
  import { AuthService } from './auth.service';
- import { User } from '../users/users.model';
  import { UpdateUserDto } from '../users/dto/update-user.dto';
+ import { Type } from 'class-transformer';
 
 
 @ApiTags('Авторизация')
@@ -23,8 +23,13 @@ export class AuthController {
   }
 
   @Patch('/update')
-  updateProfile(@Body() userDto: UpdateUserDto): Promise<User> {
+  updateProfile(@Body() userDto: UpdateUserDto) {
     return this.authService.updateProfile(userDto)
+  }
+
+  @Get('/activate/:link')
+  activate(@Param('link') link: string)  {
+    return this.authService.activate(link)
   }
 
 

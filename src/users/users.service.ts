@@ -5,17 +5,24 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { RolesService } from '../roles/roles.service';
 import { AddRoleDto } from './dto/add-role.dto';
 import { BanUserDto } from './dto/ban-user.dto';
+import { EmailService } from '../email/email.service';
+import * as uuid from 'uuid';
 
 @Injectable()
 export class UsersService {
 
-  constructor(@InjectModel(User) private userRepository: typeof User, private roleService: RolesService) {}
+  constructor(@InjectModel(User) private userRepository: typeof User, private roleService: RolesService, private mailService: EmailService) {
+  }
 
   async createUser(dto: CreateUserDto) {
+    const activationLink = uuid.v4();
     const user = await this.userRepository.create(dto);
-    const role = await this.roleService.getRoleByValue('USER');
+    const role = await this.roleService.getRoleByValue('ADMIN');
+    await this.mailService.sendActivationMail(dto.email, `http://localhost:5000/auth/activate/${activationLink}`);
+    user.activationLink = activationLink;
     await user.$set('roles', [role.id]);
     user.roles = [role];
+    await user.save();
     return user;
   }
 
@@ -35,6 +42,12 @@ export class UsersService {
   }
 
 
+  async getUserByLink(activationLink: string) {
+    const user = await this.userRepository.findOne({ where: { activationLink }, include: { all: true } });
+    return user;
+  }
+
+
   async addRole(dto: AddRoleDto) {
     const user = await this.userRepository.findByPk(dto.userId);
     const role = await this.roleService.getRoleByValue(dto.value);
@@ -49,12 +62,12 @@ export class UsersService {
   async ban(dto: BanUserDto) {
     const user = await this.userRepository.findByPk(dto.userId);
     if (!user) {
-      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND)
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
     }
     user.banned = true;
     user.banReason = dto.banReason;
     // обновляем значения в базе данных
-    await user.save()
+    await user.save();
     return user;
   }
 }
