@@ -7,7 +7,7 @@ import { Role } from '../roles/roles.model';
 import { UserRoles } from '../roles/user-roles.model';
 import { RolesModule } from '../roles/roles.module';
 import { AuthModule } from '../auth/auth.module';
-import { Post } from '../posts/posts.model';
+import { PostModel } from '../posts/posts.model';
 import { EmailModule } from '../email/email.module';
 
 
@@ -15,7 +15,7 @@ import { EmailModule } from '../email/email.module';
   controllers: [UsersController],
   providers: [UsersService],
   imports: [
-    SequelizeModule.forFeature([User, Role, UserRoles, Post]),
+    SequelizeModule.forFeature([User, Role, UserRoles, PostModel]),
     RolesModule,
     EmailModule,
     forwardRef(() => AuthModule)

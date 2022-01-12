@@ -8,7 +8,7 @@ import { UserModule } from './users/users.module';
 import { UserRoles } from './roles/user-roles.model';
 import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
-import { Post } from './posts/posts.model';
+import { PostModel } from './posts/posts.model';
 import { FilesModule } from './files/files.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { EmailModule } from './email/email.module';
@@ -31,7 +31,7 @@ import * as path from 'path';
       username: 'postgres',
       password: 'root',
       database: 'nest-app',
-      models: [User, Role, UserRoles, Post],
+      models: [User, Role, UserRoles, PostModel],
       autoLoadModels: true
     }),
     UserModule,
