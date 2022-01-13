@@ -60,8 +60,8 @@ export class AuthService {
         throw new HttpException('Некорректная ссылка активации', HttpStatus.BAD_REQUEST)
       }
 
-      /*user.isActivated = true;
-      await user.save();*/
+      user.isActivated = true;
+      await user.save();
   }
 }
 

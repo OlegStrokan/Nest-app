@@ -26,8 +26,8 @@ import * as path from 'path';
     }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: 'localhost',
-      port: 5454,
+      host: process.env.POSTGRES_HOST,
+      port: Number(process.env.POSTGRES_PORT),
       username: 'postgres',
       password: 'root',
       database: 'nest-app',
