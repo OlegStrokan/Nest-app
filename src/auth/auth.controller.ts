@@ -1,4 +1,4 @@
- import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
  import { ApiOperation, ApiOkResponse, ApiTags } from '@nestjs/swagger';
  import { CreateUserDto } from '../users/dto/create-user.dto';
  import { AuthService } from './auth.service';
@@ -38,6 +38,13 @@ export class AuthController {
   @Get('/activate/:link')
   activate(@Param('link') link: string)  {
     return this.authService.activate(link)
+  }
+
+  @ApiOperation({summary: 'Удалить свой аккаунт'})
+  @ApiOkResponse({status: 200})
+  @Delete('/:id')
+  delete(@Param('id') id: number)  {
+    return this.authService.delete(id)
   }
 
 
