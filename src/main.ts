@@ -14,15 +14,15 @@ async function start() {
     .setDescription('REST API documentation')
     .setVersion('1.0.0')
     .addTag('Oleh')
-    .build()
+    .build();
 
   // настройка swagger'а
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/api/docs', app, document);
 
 
-   // app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(new ValidationPipe());
   await app.listen(PORT, () => console.log(`Server started on port = ${PORT}`));
 }
 
-start()
+start();

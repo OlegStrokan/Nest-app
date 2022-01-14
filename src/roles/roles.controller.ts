@@ -13,7 +13,7 @@ export class RolesController {
   @ApiOperation({summary: 'Получить роль по значению'})
   @ApiOkResponse({status: 200, type: Role})
   @Get('/:value')
-  get(@Param('value') value: string) {
+  getByValue(@Param('value') value: string) {
     return this.roleService.getRoleByValue(value);
   }
 
