@@ -1,4 +1,6 @@
+import { IsString } from 'class-validator';
+
 export class BanUserDto {
-  readonly userId: number;
+  @IsString({ message: 'Должно быть строкой'})
   readonly banReason: string;
 }

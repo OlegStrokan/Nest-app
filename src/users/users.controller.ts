@@ -38,17 +38,17 @@ export class UsersController {
   @Roles("ADMIN")
   @UseGuards(RolesGuard)
   @Post('/role')
-  addRole(@Body() dto: AddRoleDto) {
-    return this.usersService.addRole(dto)
+  addRole(@Param('id') id: number, @Body() dto: AddRoleDto) {
+    return this.usersService.addRole(dto, id)
   }
 
   @ApiOperation({summary: 'Забанить пользователя'})
   @ApiOkResponse({status: 200})
   @Roles("ADMIN")
   @UseGuards(RolesGuard)
-  @Post('/ban')
-  ban(@Body() dto: BanUserDto) {
-    return this.usersService.ban(dto)
+  @Post('/ban:/id')
+  ban(@Param('id') id: number, @Body() dto: BanUserDto) {
+    return this.usersService.ban(dto, id)
   }
 
   @ApiOperation({summary: 'Удалить пользователя'})

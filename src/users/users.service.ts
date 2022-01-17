@@ -48,8 +48,8 @@ export class UsersService {
   }
 
 
-  async addRole(dto: AddRoleDto) {
-    const user = await this.userRepository.findByPk(dto.userId);
+  async addRole(dto: AddRoleDto, id: number) {
+    const user = await this.userRepository.findByPk(id);
     const role = await this.roleService.getRoleByValue(dto.value);
     if (role && user) {
       // $add - аналог append
@@ -59,8 +59,8 @@ export class UsersService {
     throw new HttpException('Пользователь или роль не найдены', HttpStatus.NOT_FOUND);
   }
 
-  async ban(dto: BanUserDto) {
-    const user = await this.userRepository.findByPk(dto.userId);
+  async ban(dto: BanUserDto, id: number) {
+    const user = await this.userRepository.findByPk(id);
     if (!user) {
       throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
     }

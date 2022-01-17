@@ -1,4 +1,4 @@
-### V_1.9.2
+### V_1.9.3
 
 # First backend app
 
@@ -24,8 +24,8 @@ Auth functional:
 Users functional:
 - GET */users - get all users*
 - POST */users - create user (register new account)*
-- POST */users/role - assign a role to a user*
-- POST */users/ban - ban a user*
+- POST */users/role/:id - assign a role to a user*
+- POST */users/ban/:id - ban a user*
 - DELETE */users/:id - delete certain user*
 
 Roles roles functional:
