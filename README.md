@@ -1,4 +1,4 @@
-### V_1.9.3
+### V_1.9.4
 
 # First backend app
 
@@ -47,10 +47,10 @@ Posts functional
 
 $ yarn
 # development
-$ yarn start
+$ yarn start:dev
 
 # watch mode
-$ yarn start:dev
+$ yarn start
 
 # production mode
 $ yarn start:prod
@@ -68,6 +68,6 @@ $ docker-compose up
 
 ```
 
-*Open http://localhost:8000 to view it in browser.*
+*Open http://localhost:5000 to view it in browser.*
 
-*Open *http://localhost:8000/api/docs* for view a swagger documentation.*
+*Open *http://localhost:5000/api/docs* for view a swagger documentation.*

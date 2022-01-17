@@ -8,20 +8,20 @@ import { Role } from './roles.model';
 @Controller('roles')
 export class RolesController {
 
-  constructor(private roleService: RolesService) {}
+  constructor(private roleService: RolesService) {
+  }
 
-  @ApiOperation({summary: 'Получить роль по значению'})
-  @ApiOkResponse({status: 200, type: Role})
+  @ApiOperation({ summary: 'Получить роль по значению' })
+  @ApiOkResponse({ status: 200, type: Role })
   @Get('/:value')
   getByValue(@Param('value') value: string) {
     return this.roleService.getRoleByValue(value);
   }
 
-  @ApiOperation({summary: 'Создать роль'})
-  @ApiOkResponse({status: 200, type: Role})
+  @ApiOperation({ summary: 'Создать роль' })
+  @ApiOkResponse({ status: 200, type: Role })
   @Post()
   create(@Body() dto: CreateRoleDto) {
     return this.roleService.createRole(dto);
   }
-
 }
