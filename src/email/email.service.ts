@@ -11,7 +11,7 @@ export class EmailService {
       secure: false,
       auth: {
         user: 'oleg14ua71@gmail.com',
-        pass: 88488848
+        pass: ''
       }
     });
   }
