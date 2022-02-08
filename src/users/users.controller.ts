@@ -16,7 +16,7 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @ApiOperation({summary: 'Получение всех пользователей'})
-  @ApiOkResponse({status: 200, type: [User]})
+  @ApiOkResponse({ status: 200, type: [User] })
   @Roles("ADMIN")
   @UseGuards(RolesGuard)
   @Get()

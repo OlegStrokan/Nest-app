@@ -12,16 +12,13 @@ import { EmailModule } from '../email/email.module';
     EmailModule,
     // для предотвращения циклической зависимости нужно использовать forwardRef
     forwardRef(() => UserModule),
-  JwtModule.register({
-    secret: process.env.PRIVATE_KEY || 'SECRET',
-    signOptions: {
-      expiresIn: '1h'
-    }
-  })
+    JwtModule.register({
+      secret: process.env.PRIVATE_KEY || 'SECRET',
+      signOptions: {
+        expiresIn: '1h',
+      },
+    }),
   ],
-  exports: [
-    AuthService,
-    JwtModule
-  ]
+  exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

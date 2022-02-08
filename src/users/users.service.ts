@@ -10,15 +10,20 @@ import * as uuid from 'uuid';
 
 @Injectable()
 export class UsersService {
-
-  constructor(@InjectModel(User) private userRepository: typeof User, private roleService: RolesService, private mailService: EmailService) {
-  }
+  constructor(
+    @InjectModel(User) private userRepository: typeof User,
+    private roleService: RolesService,
+    private mailService: EmailService,
+  ) {}
 
   async createUser(dto: CreateUserDto) {
     const activationLink = uuid.v4();
     const user = await this.userRepository.create(dto);
     const role = await this.roleService.getRoleByValue('ADMIN');
-    await this.mailService.sendActivationMail(dto.email, `http://localhost:5000/auth/activate/${activationLink}`);
+    await this.mailService.sendActivationMail(
+      dto.email,
+      `http://localhost:5000/auth/activate/${activationLink}`,
+    );
     user.activationLink = activationLink;
     await user.$set('roles', [role.id]);
     user.roles = [role];
@@ -32,21 +37,28 @@ export class UsersService {
   }
 
   async getUserByEmail(email: string) {
-    const user = await this.userRepository.findOne({ where: { email }, include: { all: true } });
+    const user = await this.userRepository.findOne({
+      where: { email },
+      include: { all: true },
+    });
     return user;
   }
 
   async getUserById(id: number) {
-    const user = await this.userRepository.findOne({ where: { id }, include: { all: true } });
+    const user = await this.userRepository.findOne({
+      where: { id },
+      include: { all: true },
+    });
     return user;
   }
-
 
   async getUserByLink(activationLink: string) {
-    const user = await this.userRepository.findOne({ where: { activationLink }, include: { all: true } });
+    const user = await this.userRepository.findOne({
+      where: { activationLink },
+      include: { all: true },
+    });
     return user;
   }
-
 
   async addRole(dto: AddRoleDto, id: number) {
     const user = await this.userRepository.findByPk(id);
@@ -56,7 +68,10 @@ export class UsersService {
       await user.$add('role', role.id);
       return dto;
     }
-    throw new HttpException('Пользователь или роль не найдены', HttpStatus.NOT_FOUND);
+    throw new HttpException(
+      'Пользователь или роль не найдены',
+      HttpStatus.NOT_FOUND,
+    );
   }
 
   async ban(dto: BanUserDto, id: number) {
@@ -72,6 +87,6 @@ export class UsersService {
   }
 
   async delete(id: number) {
-    await this.userRepository.destroy({where: {id}})
+    await this.userRepository.destroy({ where: { id } });
   }
 }
